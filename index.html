@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Phone Empire — Ultimate Luxury</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="phone-device-frame" id="phone-frame">
+    <div class="phone-speaker-notch"></div>
+    
+    <div class="phone-screen" id="phone-screen-bg">
+      
+      <!-- СТАТУС-БАР -->
+      <header class="phone-top-bar">
+        <span id="phone-clock">08:00</span>
+        <div class="phone-status-icons">
+          <span>⚡ 5G LUX</span>
+          <span>🔋 <span id="ui-battery">100</span>%</span>
+        </div>
+      </header>
+
+      <!-- 1. ЭКРАН БЛОКИРОВКИ -->
+      <div id="screen-lock" class="mobile-screen active-screen">
+        <div class="lock-clock-box">
+          <h1 id="lock-time">08:00</h1>
+          <p id="lock-date">День 1 в мегаполисе</p>
+        </div>
+        
+        <div class="lock-widget">
+          <p>💰 Капитал: <b id="lock-balance" class="gold-text">30000</b> ₽</p>
+          <p class="muted">Статус: <span id="lock-level">Новичок</span></p>
+        </div>
+
+        <div class="pin-container">
+          <p id="pin-instruction" class="muted" style="margin-bottom: 8px;">Введите ваш PIN-код</p>
+          <div id="pin-dots" class="pin-dots">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div class="pin-pad">
+            <button onclick="pressPin('1')">1</button>
+            <button onclick="pressPin('2')">2</button>
+            <button onclick="pressPin('3')">3</button>
+            <button onclick="pressPin('4')">4</button>
+            <button onclick="pressPin('5')">5</button>
+            <button onclick="pressPin('6')">6</button>
+            <button onclick="pressPin('7')">7</button>
+            <button onclick="pressPin('8')">8</button>
+            <button onclick="pressPin('9')">9</button>
+            <button onclick="clearPin()">C</button>
+            <button onclick="pressPin('0')">0</button>
+            <button onclick="submitPin()" style="background:var(--gold); color:#000;">OK</button>
+          </div>
+          <button id="reset-pin-btn" class="btn-reset-pin" onclick="resetPinWithFee()">Забыли пароль? Сброс за 5000 ₽ 🔄</button>
+        </div>
+      </div>
+
+      <!-- 2. РАБОЧИЙ СТОЛ (LAUNCHER) -->
+      <div id="screen-desktop" class="mobile-screen">
+        <div class="desktop-header-widget">
+          <div class="mini-stat">💰 <span id="ds-balance">30000</span> ₽</div>
+          <div class="mini-stat">📅 День <span id="ds-day">1</span></div>
+          <div class="mini-stat" style="color:var(--gold);">⚡ 2x Время</div>
+        </div>
+
+        <div class="news-ticker" id="news-ticker-box">
+          📰 Рынок премиальных смартфонов стабилен.
+        </div>
+
+        <h3 class="desktop-title">Приложения Империи</h3>
+        
+        <div class="app-grid">
+          <div class="app-icon" onclick="openApp('home')"><div class="icon-img">🏠</div><span>Главная</span></div>
+          <div class="app-icon" onclick="openApp('market')"><div class="icon-img">🛒</div><span>Рынок</span></div>
+          <div class="app-icon" onclick="openApp('storage')"><div class="icon-img">📦</div><span>Склад</span></div>
+          <div class="app-icon" onclick="openApp('repair')"><div class="icon-img">🔧</div><span>Сервис</span></div>
+          <div class="app-icon" onclick="openApp('sales')"><div class="icon-img">🏷️</div><span>Бутик</span></div>
+          <div class="app-icon" onclick="openApp('chat')"><div class="icon-img" style="border-color:#38bdf8;">💬</div><span>Торг</span></div>
+          <div class="app-icon" onclick="openApp('darknet')"><div class="icon-img" style="background:#111; border-color:#ef4444;">🕶️</div><span>Даркнет</span></div>
+          <div class="app-icon" onclick="openApp('casino')"><div class="icon-img" style="background:#1e3a8a; border-color:#fbbf24;">🎰</div><span>Казино</span></div>
+          <div class="app-icon" onclick="openApp('stocks')"><div class="icon-img" style="border-color:#10b981;">📈</div><span>Биржа</span></div>
+          <div class="app-icon" onclick="openApp('hr')"><div class="icon-img">👔</div><span>Кадры</span></div>
+          <div class="app-icon" onclick="openApp('map')"><div class="icon-img">🗺️</div><span>Город</span></div>
+          <div class="app-icon" onclick="openApp('bank')"><div class="icon-img">🏦</div><span>Банк</span></div>
+          <div class="app-icon" onclick="openApp('brand')"><div class="icon-img">👑</div><span>Завод</span></div>
+          <div class="app-icon" onclick="openApp('sleep')"><div class="icon-img" style="background:#1e1b4b;">💤</div><span>Сон</span></div>
+          <div class="app-icon" onclick="openApp('shop')"><div class="icon-img">🏢</div><span>Бизнес</span></div>
+          <div class="app-icon" onclick="openApp('profile')"><div class="icon-img">👤</div><span>Профиль</span></div>
+        </div>
+      </div>
+
+      <!-- 3. МОБИЛЬНЫЕ ПРИЛОЖЕНИЯ -->
+      <div id="screen-app" class="mobile-screen">
+        <div class="app-top-nav">
+          <button class="btn-back" onclick="closeApp()">⬅ Меню</button>
+          <h2 id="app-title-header" class="gold-text">Приложение</h2>
+          <button class="btn-lock-screen" onclick="lockPhone()">🔒</button>
+        </div>
+
+        <div class="app-content-body">
+          
+          <!-- ГЛАВНАЯ -->
+          <div id="tab-home" class="tab-pane active">
+            <div class="dash-card">
+              <h3 class="gold-text">Игровые Часы и Календарь</h3>
+              <p id="calendar-date-display" class="gold-text" style="font-size: 1.05rem; font-weight: 700; margin: 6px 0;">08:00 | День 1</p>
+              <p class="muted">Скорость времени: <b style="color:#fff;">2x (Ускоренная симуляция)</b></p>
+            </div>
+            <div class="dash-card" style="margin-top: 10px;">
+              <h3 class="gold-text">Корпоративный прогресс</h3>
+              <p id="level-info" class="muted">Уровень империи</p>
+              <p class="muted" style="margin-top:4px;">Зарплаты и налоги: <b id="ui-daily-cost">0 ₽</b> / день</p>
+            </div>
+            <h3 style="margin: 14px 0 8px;" class="gold-text">Задания дня</h3>
+            <div id="quests-list" class="cards-grid" style="margin-bottom:12px;"></div>
+            <h3 style="margin: 14px 0 8px;" class="gold-text">Лента событий</h3>
+            <ul id="home-logs" class="log-feed"></ul>
+          </div>
+
+          <!-- РЫНОК -->
+          <div id="tab-market" class="tab-pane">
+            <div style="margin-bottom: 12px;">
+              <button class="btn-gold" style="width: 100%; padding: 14px; font-size: 1rem;" onclick="triggerAuction()">🔨 VIP Аукцион</button>
+            </div>
+            <div id="market-grid" class="cards-grid"></div>
+          </div>
+
+          <!-- СКЛАД И ТЮНИНГ -->
+          <div id="tab-storage" class="tab-pane">
+            <div class="dash-card" style="margin-bottom: 10px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <h3 class="gold-text">Складской отсек</h3>
+                <p class="muted">Вместимость: <b id="storage-cap">0/5</b> мест</p>
+              </div>
+              <button class="btn-gold-sm" onclick="upgradeStorageCapacity()">+5 мест (2500 ₽)</button>
+            </div>
+            <div id="storage-grid" class="cards-grid"></div>
+          </div>
+
+          <!-- СЕРВИС И ПРОШИВКА -->
+          <div id="tab-repair" class="tab-pane">
+            <div class="dash-card" style="margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <h3 class="gold-text">Программатор Unlocker</h3>
+                <p class="muted">Для снятия блокировки Даркнета</p>
+              </div>
+              <button class="btn-gold-sm" id="btn-buy-unlocker" onclick="buyUnlocker()">Купить (5000 ₽)</button>
+            </div>
+            <div id="parts-shop" class="parts-bar"></div>
+            <h3 style="margin: 14px 0 8px;" class="gold-text">Мастерская и Тюнинг 24K</h3>
+            <div id="repair-grid" class="cards-grid"></div>
+          </div>
+
+          <!-- БУТИК -->
+          <div id="tab-sales" class="tab-pane">
+            <div id="sales-grid" class="cards-grid"></div>
+          </div>
+
+          <!-- МЕССЕНДЖЕР И ТОРГ -->
+          <div id="tab-chat" class="tab-pane">
+            <div class="dash-card">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h3 class="gold-text">Прямые покупатели</h3>
+                <button class="btn-gold-sm" onclick="generateBuyerOffers()">🔄 Искать клиентов</button>
+              </div>
+              <p class="muted" style="margin-top:4px;">Торгуйтесь за свои смартфоны со склада напрямую!</p>
+            </div>
+            <div id="chat-offers-grid" class="cards-grid"></div>
+          </div>
+
+          <!-- ДАРКНЕТ -->
+          <div id="tab-darknet" class="tab-pane">
+            <div class="dash-card" style="border-color:#ef4444; background:#140808;">
+              <h3 style="color:#ef4444;">🕶️ Подпольный рынок DarkNet</h3>
+              <p class="muted" style="margin-top:4px;">Смартфоны со скидкой 60%, но заблокированы паролем. Продажа без разблокировки программатором грозит штрафом полиции 5000 ₽!</p>
+              <button class="btn-danger btn-sm" style="margin-top:8px; width:100%;" onclick="generateDarknet()">Обновить черные лоты</button>
+            </div>
+            <div id="darknet-grid" class="cards-grid"></div>
+          </div>
+
+          <!-- КАЗИНО -->
+          <div id="tab-casino" class="tab-pane">
+            <div class="casino-banner">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <h3 style="color:#fbbf24; font-size:1.1rem;">🎰 1xEmpire Casino</h3>
+                  <p style="font-size:0.75rem; color:#cbd5e1;">Выигрывай миллионы в мини-играх!</p>
+                </div>
+                <div class="price-box" id="casino-balance-txt">30000 ₽</div>
+              </div>
+              <div class="bet-control-bar">
+                <span>Ставка (₽):</span>
+                <input type="number" id="casino-bet-input" value="1000" min="100" step="500">
+                <button class="btn-gold-sm" onclick="setBetMultiplier(0.5)">1/2</button>
+                <button class="btn-gold-sm" onclick="setBetMultiplier(2)">2X</button>
+                <button class="btn-gold-sm" onclick="setBetMax()">MAX</button>
+              </div>
+            </div>
+
+            <div class="casino-tabs">
+              <button class="c-tab active" id="ctab-btn-aviator" onclick="switchCasinoGame('aviator')">✈️ Самолетик</button>
+              <button class="c-tab" id="ctab-btn-mines" onclick="switchCasinoGame('mines')">⛏️ Кирка Майн</button>
+              <button class="c-tab" id="ctab-btn-slots" onclick="switchCasinoGame('slots')">🤠 Western Slot</button>
+            </div>
+
+            <!-- ИГРА 1: САМОЛЕТИК -->
+            <div id="cgame-aviator" class="casino-game-box active">
+              <div class="aviator-screen" id="aviator-screen">
+                <div id="aviator-plane">✈️</div>
+                <div id="aviator-mult">1.00x</div>
+                <p id="aviator-status" class="muted">Готов к взлету</p>
+              </div>
+              <div class="btn-row">
+                <button class="btn-primary" id="btn-aviator-start" onclick="startAviator()">🚀 Ставка и Взлет</button>
+                <button class="btn-gold" id="btn-aviator-cashout" onclick="cashoutAviator()" disabled>💰 Забрать куш</button>
+              </div>
+            </div>
+
+            <!-- ИГРА 2: КИРКА МАЙНКРАФТ -->
+            <div id="cgame-mines" class="casino-game-box">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span class="muted">Множитель: <b class="gold-text" id="mines-mult">1.00x</b></span>
+                <span class="muted">Награда: <b class="ok" id="mines-win-val">0 ₽</b></span>
+              </div>
+              <div id="mines-grid" class="mines-grid"></div>
+              <div class="btn-row" style="margin-top:10px;">
+                <button class="btn-primary" id="btn-mines-start" onclick="startMines()">⛏️ Начать раскопку</button>
+                <button class="btn-gold" id="btn-mines-cashout" onclick="cashoutMines()" disabled>💎 Забрать руду</button>
+              </div>
+            </div>
+
+            <!-- ИГРА 3: WESTERN SLOT -->
+            <div id="cgame-slots" class="casino-game-box">
+              <div class="slot-machine-box">
+                <div class="slot-reels">
+                  <div class="reel" id="reel-1">🤠</div>
+                  <div class="reel" id="reel-2">💰</div>
+                  <div class="reel" id="reel-3">🔫</div>
+                </div>
+                <p id="slot-result-msg" class="gold-text" style="font-weight:700; margin:10px 0;">3 одинаковых = x10 | 2 одинаковых = x2.5</p>
+                <button class="btn-gold" onclick="spinWesternSlot()">🎰 КРУТИТЬ БАРАБАН</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- БИРЖА И КРИПТА -->
+          <div id="tab-stocks" class="tab-pane">
+            <div class="dash-card">
+              <h3 class="gold-text">Фондовая и Крипто Биржа</h3>
+              <p class="muted">Цены меняются каждый час и зависят от новостей!</p>
+            </div>
+            <div id="stocks-grid" class="cards-grid"></div>
+          </div>
+
+          <!-- HR-АГЕНТСТВО -->
+          <div id="tab-hr" class="tab-pane">
+            <div class="dash-card">
+              <h3 class="gold-text">Штат сотрудников</h3>
+              <p class="muted">Нанимайте профи для автоматизации ремонта, продаж и защиты от налоговой.</p>
+            </div>
+            <div id="hr-grid" class="cards-grid"></div>
+          </div>
+
+          <!-- КАРТА ГОРОДА -->
+          <div id="tab-map" class="tab-pane">
+            <h3 class="gold-text" style="margin-bottom:10px;">Районы мегаполиса</h3>
+            <div id="map-districts" class="cards-grid"></div>
+          </div>
+          
+          <!-- БАНК -->
+          <div id="tab-bank" class="tab-pane">
+            <div class="dash-card">
+              <h3 class="gold-text">Швейцарский банк</h3>
+              <p class="muted">Депозит под 3% ежедневно.</p>
+              <p style="font-size: 1.2rem; margin: 10px 0;">На счете: <b id="bank-balance" class="gold-text">0</b> ₽</p>
+              <div class="btn-row">
+                <button class="btn-gold btn-sm" onclick="bankDeposit()">Вложить 5000 ₽</button>
+                <button class="btn-secondary btn-sm" onclick="bankWithdraw()">Снять все</button>
+              </div>
+            </div>
+            <div class="dash-card" style="margin-top:10px;">
+              <h3 class="gold-text">Кредитная линия</h3>
+              <p class="muted" style="margin-bottom: 8px;">Выберите сумму кредита:</p>
+              <div class="btn-row" style="margin-bottom: 8px;">
+                <button class="btn-secondary btn-sm" style="flex:1;" onclick="takeLoan(1000)">1 000 ₽</button>
+                <button class="btn-secondary btn-sm" style="flex:1;" onclick="takeLoan(10000)">10 000 ₽</button>
+                <button class="btn-secondary btn-sm" style="flex:1;" onclick="takeLoan(50000)">50 000 ₽</button>
+              </div>
+              <button class="btn-gold btn-sm" style="width:100%;" onclick="takeLoan(100000)">100 000 ₽ (Мега-кредит)</button>
+              <p class="small-note" style="margin-top: 6px;" id="loan-status-text">Активный долг: 0 ₽</p>
+            </div>
+          </div>
+
+          <!-- ЗАВОД -->
+          <div id="tab-brand" class="tab-pane">
+            <div class="dash-card">
+              <h3 class="gold-text">Собственный завод смартфонов</h3>
+              <p class="muted">Запуск конвейера стоит <b>500 000 ₽</b>. Завод автоматически приносит по 100 000 ₽ чистой прибыли каждый день!</p>
+              <div style="margin-top:12px;" id="factory-box">
+                <input type="text" id="brand-name-input" placeholder="Название вашего бренда" style="width:100%; padding:8px; background:var(--bg-input); border:1px solid var(--gold); color:#fff; border-radius:6px; margin-bottom:8px;">
+                <button class="btn-gold" style="width:100%;" onclick="launchFactory()">Построить завод (500 000 ₽)</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- СОН -->
+          <div id="tab-sleep" class="tab-pane">
+            <div class="dash-card" style="text-align: center; padding: 20px;">
+              <div style="font-size: 3.5rem; margin-bottom: 10px;">🌙</div>
+              <h3 class="gold-text">Режим Сна (22:00 - 08:00)</h3>
+              <p class="muted" style="margin: 10px 0;">Уложите корпорацию спать, чтобы промотать время наступающего дня и получить прибыль.</p>
+              <div id="sleep-app-clock" style="background:var(--bg-input); color:var(--gold); padding:8px 16px; border-radius:10px; font-size:1.2rem; font-weight:700; margin: 15px 0; display:inline-block; border:1px solid var(--gold);">22:00</div>
+              <p id="sleep-status-msg" class="ok" style="font-weight: 600; margin-bottom: 15px;">Время засыпать (22:00)</p>
+              <button class="btn-gold" onclick="triggerSleepCycle()">Улечься спать до 08:00 🛌</button>
+            </div>
+          </div>
+
+          <!-- БИЗНЕС -->
+          <div id="tab-shop" class="tab-pane"><div id="upgrades-grid" class="cards-grid"></div></div>
+          
+          <!-- ПРОФИЛЬ -->
+          <div id="tab-profile" class="tab-pane">
+            <div class="dash-card">
+              <h3 class="gold-text">Стили и Обои</h3>
+              <p class="muted" style="margin-bottom: 8px;">Премиальные темы оформления:</p>
+              <div class="btn-row">
+                <button class="btn-gold-sm" onclick="setWallpaper('gold')">⚡ Золото</button>
+                <button class="btn-secondary btn-sm" onclick="setWallpaper('blue')">🌌 Неон</button>
+                <button class="btn-danger btn-sm" onclick="setWallpaper('red')">🔥 Криминал</button>
+                <button class="btn-gold-sm" onclick="setWallpaper('matrix')">💻 Матрица</button>
+              </div>
+            </div>
+            <div class="dash-card" style="margin-top:10px;"><h3 class="gold-text">Достижения империи</h3><div id="achievements-list" class="ach-grid" style="margin-top:8px;"></div></div>
+            <div class="dash-card" style="margin-top:10px;"><h3 class="gold-text">Статистика</h3><ul class="stats-list" id="profile-stats"></ul><button class="btn-danger" style="margin-top:12px; width:100%;" onclick="hardReset()">Сбросить прогресс</button></div>
+          </div>
+
+        </div>
+      </div>
+
+      <nav class="phone-dock">
+        <div class="dock-icon" onclick="openApp('home')">🏠</div>
+        <div class="dock-icon" onclick="openApp('market')">🛒</div>
+        <div class="dock-icon" onclick="openApp('casino')">🎰</div>
+        <div class="dock-icon" onclick="openApp('storage')">📦</div>
+      </nav>
+
+    </div>
+  </div>
+
+  <div id="toast-box"></div>
+  <script src="script.js"></script>
+</body>
+</html>
