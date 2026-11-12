@@ -1,16 +1,19 @@
 const CACHE_NAME = "phone-empire-v25";
 const ASSETS = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./script.js",
-  "./manifest.json",
-  "./icon-512.png"
+  "index.html",
+  "style.css",
+  "script.js",
+  "manifest.json",
+  "icon-512.png"
 ];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(ASSETS).catch((err) => {
+        console.warn("Ошибка кэширования некоторых ресурсов: ", err);
+      });
+    })
   );
   self.skipWaiting();
 });
